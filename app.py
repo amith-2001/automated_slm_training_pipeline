@@ -12,7 +12,7 @@ from io import BytesIO
 #
 # from streamlit.server.server import Server
 from streamlit_lottie import st_lottie
-
+import json
 
 # Ensure NLTK resources are downloaded
 nltk.download('punkt')
@@ -31,6 +31,11 @@ if 'current_page' not in st.session_state:
     st.session_state.current_page = 1
 
 # Function to load Lottie animation from a URL
+def load_lottiefile(filepath: str):
+    """ Load a Lottie animation from a JSON file located at filepath """
+    with open(filepath, 'r') as file:
+        return json.load(file)
+
 
 # function to preprocess text
 def preprocess_text(text):
@@ -46,18 +51,53 @@ def preprocess_text(text):
 
 
 
+
 def setup_page():
     # Check the page stored in session state and display content accordingly
     if st.session_state.page == 'home':
-        st.title("Welcome Automated SLM Training application")
-        st.write("Use the buttons below to navigate through the application.")
+        lottie_animation_path = "Animation - 1714279612530.json"
+        lottie_animation = load_lottiefile(lottie_animation_path)
 
-        if st.button('Go to Page 1: Text Input'):
-            st.session_state.page = 'Page 1'
-            st.experimental_rerun()
-        if st.button('Go to Page 2: Model Input'):
-            st.session_state.page = 'Page 2'
-            st.experimental_rerun()
+        st.title("Welcome Automated SLM Training application")
+        st_lottie(lottie_animation,height=200, width=550, key="example")
+        st.markdown("""
+            ### Use the buttons below to navigate through the application.
+            """, unsafe_allow_html=True)
+
+
+
+        # Define a layout with two columns
+        col1, col2 = st.columns(2)
+
+        # Place the first button in the first column
+        with col1:
+            if st.button('Text Input'):
+                st.session_state.page = 'Page 1'
+                st.experimental_rerun()
+
+
+
+
+        st.markdown("""
+        <style>
+        div.stButton > button:last-child {
+            background-color: #364996;
+            color: white;
+            height: 3em;
+            width: 10em;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+        }
+        </style>""", unsafe_allow_html=True)
+
+
+        # Place the second button in the second column
+        with col2:
+            if st.button('Model Input'):
+                st.session_state.page = 'Page 2'
+                st.experimental_rerun()
+
     elif st.session_state.page == 'Page 1':
         page1()
     elif st.session_state.page == 'Page 2':

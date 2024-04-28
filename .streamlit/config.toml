@@ -4,3 +4,13 @@ primaryColor="#2196F3"  # Blue color for primary elements
 secondaryBackgroundColor="#E3F2FD"  # Lighter blue for secondary background
 textColor="#333333"  # Keeping the text color unchanged
 font="sans serif"
+
+
+
+# Remove Streamlit branding
+[custom]
+hideFooter = true
+hideMainMenu = true
+
+
+
