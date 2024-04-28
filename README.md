@@ -31,7 +31,9 @@ cd automated_slm_training_pipeline
 ```
 ### Installing Dependencies
 Before running the application, you need to install the required libraries:
-``` pip install -r requirements.txt
+
+```bash
+ pip install -r requirements.txt
 ```
 ### Running the Application
 To run the application, execute the following command in the terminal:
