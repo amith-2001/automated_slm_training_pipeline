@@ -1,16 +1,19 @@
 import streamlit as st
 import nltk
+import pickle
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.util import ngrams
 import string
 from collections import defaultdict, Counter
+from io import BytesIO
 
 # Ensure NLTK resources are downloaded
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
+
 
 # Define a function to preprocess text
 def preprocess_text(text):
@@ -24,6 +27,7 @@ def preprocess_text(text):
     tokens = [lemmatizer.lemmatize(token) for token in tokens]
     return [token for token in tokens if token.strip()]
 
+
 # Define a function to train the n-gram model
 def train_ngram_model(tokens, n=3):
     n_grams = list(ngrams(tokens, n, pad_right=True, pad_left=True, left_pad_symbol='<s>', right_pad_symbol='</s>'))
@@ -31,8 +35,10 @@ def train_ngram_model(tokens, n=3):
     context_counts = defaultdict(int)
     for gram in n_grams:
         context_counts[gram[:-1]] += n_gram_freq[gram]
-    n_gram_prob = {gram: freq / context_counts[gram[:-1]] for gram, freq in n_gram_freq.items() if context_counts[gram[:-1]] != 0}
+    n_gram_prob = {gram: freq / context_counts[gram[:-1]] for gram, freq in n_gram_freq.items() if
+                   context_counts[gram[:-1]] != 0}
     return n_gram_prob
+
 
 # Define a function to predict the next words
 def predict_next_words(model, initial_words, num_predictions=1):
@@ -49,6 +55,7 @@ def predict_next_words(model, initial_words, num_predictions=1):
         current_context = (current_context[1], next_word)
     return ' '.join(full_sentence)
 
+
 # Streamlit application layout
 st.title('N-Gram Model Text Predictor')
 
@@ -59,7 +66,8 @@ user_input = st.text_area("Enter a large body of text to train the model:")
 initial_input = st.text_input("Enter 2 words to start the prediction (separated by spaces):")
 
 # Slider for choosing the number of predictions
-num_predictions = st.slider("Select the number of words to predict:", min_value=1, max_value=10, value=5, help="Selecting fewer words generally results in more accurate predictions.")
+num_predictions = st.slider("Select the number of words to predict:", min_value=1, max_value=10, value=5,
+                            help="Selecting fewer words generally results in more accurate predictions.")
 
 # Button to trigger prediction
 if st.button('Generate Text'):
@@ -70,6 +78,17 @@ if st.button('Generate Text'):
         if len(initial_words) == 2:
             sentence = predict_next_words(model, initial_words, num_predictions)
             st.write("Complete sentence:", sentence)
+
+            # Convert the model into a byte stream for download
+            model_bytes = BytesIO()
+            pickle.dump(model, model_bytes)
+            model_bytes.seek(0)
+
+            # Create a download button for the trained model
+            st.download_button(label="Download Trained Model as a .pkl file",
+                               data=model_bytes,
+                               file_name="model.pkl",
+                               mime="application/octet-stream")
         else:
             st.error("Please enter exactly 2 words to start the prediction.")
     else:
