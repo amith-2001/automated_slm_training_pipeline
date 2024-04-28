@@ -11,6 +11,9 @@ from io import BytesIO
 # from streamlit.report_thread import get_report_ctx
 #
 # from streamlit.server.server import Server
+from streamlit_lottie import st_lottie
+
+
 # Ensure NLTK resources are downloaded
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -27,6 +30,7 @@ if 'interests' not in st.session_state:
 if 'current_page' not in st.session_state:
     st.session_state.current_page = 1
 
+# Function to load Lottie animation from a URL
 
 # function to preprocess text
 def preprocess_text(text):
@@ -50,9 +54,10 @@ def setup_page():
 
         if st.button('Go to Page 1: Text Input'):
             st.session_state.page = 'Page 1'
+            st.experimental_rerun()
         if st.button('Go to Page 2: Model Input'):
             st.session_state.page = 'Page 2'
-
+            st.experimental_rerun()
     elif st.session_state.page == 'Page 1':
         page1()
     elif st.session_state.page == 'Page 2':
@@ -127,6 +132,7 @@ def page1():
             st.error("Please enter the required text and initial words.")
     if st.button('Back to Home'):
         st.session_state.page = 'home'
+        st.experimental_rerun()
 
 
 def page2():
@@ -153,6 +159,7 @@ def page2():
 
     if st.button('Back to Home'):
         st.session_state.page = 'home'
+        st.experimental_rerun()
 
 
 setup_page()
