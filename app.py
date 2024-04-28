@@ -28,7 +28,7 @@ if 'current_page' not in st.session_state:
     st.session_state.current_page = 1
 
 
-# Define a function to preprocess text
+# function to preprocess text
 def preprocess_text(text):
     tokens = word_tokenize(text)
     tokens = [token.lower() for token in tokens]
@@ -156,3 +156,7 @@ def page2():
 
 
 setup_page()
+
+
+# while running this app if the tempelate doesnt load , use the below command
+# streamlit run app.py --server.baseUrlPath /.streamlit/config.toml
