@@ -45,12 +45,12 @@ def preprocess_text(text):
 def setup_page():
     # Check the page stored in session state and display content accordingly
     if st.session_state.page == 'home':
-        st.title("Welcome to the N-Gram Model Text Predictor")
+        st.title("Welcome Automated SLM Training application")
         st.write("Use the buttons below to navigate through the application.")
 
         if st.button('Go to Page 1: Text Input'):
             st.session_state.page = 'Page 1'
-        if st.button('Go to Page 2: About'):
+        if st.button('Go to Page 2: Model Input'):
             st.session_state.page = 'Page 2'
 
     elif st.session_state.page == 'Page 1':
@@ -125,6 +125,8 @@ def page1():
                 st.error("Please enter exactly 2 words to start the prediction.")
         else:
             st.error("Please enter the required text and initial words.")
+    if st.button('Back to Home'):
+        st.session_state.page = 'home'
 
 
 def page2():
@@ -148,4 +150,9 @@ def page2():
                     st.error("Please enter exactly 2 words to start the prediction.")
             else:
                 st.error("Please enter initial words to start the prediction.")
+
+    if st.button('Back to Home'):
+        st.session_state.page = 'home'
+
+
 setup_page()
