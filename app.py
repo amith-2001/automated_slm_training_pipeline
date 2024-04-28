@@ -13,7 +13,7 @@ from io import BytesIO
 # from streamlit.server.server import Server
 from streamlit_lottie import st_lottie
 import json
-
+import PyPDF2
 # Ensure NLTK resources are downloaded
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -29,6 +29,19 @@ if 'interests' not in st.session_state:
     st.session_state.interests = []
 if 'current_page' not in st.session_state:
     st.session_state.current_page = 1
+
+
+# Function to extract text from PDF using PyPDF2
+def extract_text_from_pdf(pdf_file):
+    text = ""
+    pdf_reader = PyPDF2.PdfReader(pdf_file)
+    for page in pdf_reader.pages:
+        text += page.extract_text() if page.extract_text() else ''
+    return text
+
+
+
+
 
 # Function to load Lottie animation from a URL
 def load_lottiefile(filepath: str):
@@ -138,6 +151,15 @@ def page1():
 
     # Text input for user
     user_input = st.text_area("Enter a large body of text to train the model:")
+
+
+    # PDF File uploader
+    pdf_file = st.file_uploader("Or upload a PDF file", type="pdf")
+    if pdf_file:
+        user_input += extract_text_from_pdf(pdf_file)
+
+
+
 
     # Text input for initial words to predict the sequence
     initial_input = st.text_input("Enter 2 words to start the prediction (separated by spaces):")
