@@ -19,6 +19,12 @@ The backend of the application is powered by Python, utilizing libraries such as
 ## Computational Cost Benefits
 One of the key advantages of this project is the significant reduction in computational costs. Large language models are known for their steep requirements in terms of computational resources, which include high-end GPUs and substantial amounts of electricity for training and inference. By optimizing the pipeline for n-gram models, which are substantially less resource-intensive, our project makes it feasible for smaller organizations or individual developers to implement language processing tasks. This democratizes access to natural language processing capabilities, allowing a broader range of users to incorporate sophisticated text prediction features into their applications without incurring the high costs associated with larger models.
 
+## Use this application 
+Click on the below link , you will be redirected to the web app where you will be able to use our application.
+```bash
+https://automatedslmtrainingpipeline-f8c4rvvxsnsgfmlgxivvh3.streamlit.app/
+```
+
 ## Getting Started
 To get started with this project, you will need to have Python installed on your machine, as well as the necessary Python libraries.
 
