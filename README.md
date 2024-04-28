@@ -21,9 +21,9 @@ One of the key advantages of this project is the significant reduction in comput
 
 ## Use this application 
 Click on the below link , you will be redirected to the web app where you will be able to use our application.
-```bash
+
 https://automatedslmtrainingpipeline-f8c4rvvxsnsgfmlgxivvh3.streamlit.app/
-```
+
 
 ## Getting Started
 To get started with this project, you will need to have Python installed on your machine, as well as the necessary Python libraries.
